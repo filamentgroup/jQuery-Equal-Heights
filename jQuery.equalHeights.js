@@ -10,25 +10,34 @@
  		by default if pxToEm() method is available.
  * Dependencies: jQuery library, pxToEm method	(article: http://www.filamentgroup.com/lab/retaining_scalable_interfaces_with_pixel_to_em_conversion/)							  
  * Usage Example: $(element).equalHeights();
-   						      Optional: to set min-height in px, pass a true argument: $(element).equalHeights(true);
- * Version: 2.0, 07.24.2008
+   						      Optional: to set min-height in px, pass a true argument: $(element).equalHeights{em: true});
+ * Version: 2.1, 04.27.2012
  * Changelog:
  *  08.02.2007 initial Version 1.0
  *  07.24.2008 v 2.0 - added support for widths
+ *  04.27.2012 : PseudoNinja (email at pseudo ninja dot com) - added support for exceptions
 --------------------------------------------------------------------*/
 
-$.fn.equalHeights = function(px) {
-	$(this).each(function(){
-		var currentTallest = 0;
-		$(this).children().each(function(i){
-			if ($(this).height() > currentTallest) { currentTallest = $(this).height(); }
-		});
-		if (!px || !Number.prototype.pxToEm) currentTallest = currentTallest.pxToEm(); //use ems unless px is specified
-		// for ie6, set height since min-height isn't supported
-		if ($.browser.msie && $.browser.version == 6.0) { $(this).children().css({'height': currentTallest}); }
-		$(this).children().css({'min-height': currentTallest}); 
-	});
-	return this;
+/**
+ * Equal Heights JQuery Extension
+ */
+$.fn.equalHeights = function (params) {
+    var _exclude = params.exclude || [],
+    	_em = params.em || false
+    	;
+    $(this).each(function () {
+        var currentTallest = 0;
+        $(this).children().not(_exclude.join(', ')).each(function (i) {
+            if ($(this).height() > currentTallest) { currentTallest = $(this).height(); }
+        });
+        if (!px || !Number.prototype.pxToEm) currentTallest = currentTallest.pxToEm(); //use ems unless px is specified
+        // for ie6, set height since min-height isn't supported
+        if ($.browser.msie && $.browser.version == 6.0) {
+            $(this).children().not(_exclude.join(', ')).css({ 'height': currentTallest });
+        }
+        $(this).children().not(_exclude.join(', ')).css({ 'min-height': currentTallest });
+    });
+    return this;
 };
 
 // just in case you need it...
