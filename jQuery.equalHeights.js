@@ -17,31 +17,33 @@
  *  07.24.2008 v 2.0 - added support for widths
 --------------------------------------------------------------------*/
 
-$.fn.equalHeights = function(px) {
+$.fn.equalHeights = function(px,childSelector) {
 	$(this).each(function(){
 		var currentTallest = 0;
-		$(this).children().each(function(i){
+		$kids = (typeof(childSelector)=="undefined")?$(this).children():$(this).find(childSelector);
+		$kids.each(function(i){
 			if ($(this).height() > currentTallest) { currentTallest = $(this).height(); }
 		});
-		if (!px || !Number.prototype.pxToEm) currentTallest = currentTallest.pxToEm(); //use ems unless px is specified
+		if (!px || !$.fn.toEm) currentTallest = $(currentTallest).toEm(); //use ems unless px is specified
 		// for ie6, set height since min-height isn't supported
 		if ($.browser.msie && $.browser.version == 6.0) { $(this).children().css({'height': currentTallest}); }
-		$(this).children().css({'min-height': currentTallest}); 
+		$kids.css({'min-height': currentTallest}); 
 	});
 	return this;
 };
 
 // just in case you need it...
-$.fn.equalWidths = function(px) {
+$.fn.equalWidths = function(px,childSelector) {
 	$(this).each(function(){
 		var currentWidest = 0;
-		$(this).children().each(function(i){
+		$kids = (typeof(childSelector)=="undefined")?$(this).children():$(this).find(childSelector);
+		$kids.children().each(function(i){
 				if($(this).width() > currentWidest) { currentWidest = $(this).width(); }
 		});
-		if(!px || !Number.prototype.pxToEm) currentWidest = currentWidest.pxToEm(); //use ems unless px is specified
+		if(!px || !$.fn.pxToEm) currentWidest = $(currentWidest).toEm(); //use ems unless px is specified
 		// for ie6, set width since min-width isn't supported
 		if ($.browser.msie && $.browser.version == 6.0) { $(this).children().css({'width': currentWidest}); }
-		$(this).children().css({'min-width': currentWidest}); 
+		$kids.css({'min-width': currentWidest}); 
 	});
 	return this;
 };
