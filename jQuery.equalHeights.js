@@ -17,16 +17,17 @@
  *  07.24.2008 v 2.0 - added support for widths
 --------------------------------------------------------------------*/
 
-$.fn.equalHeights = function(px) {
+$.fn.equalHeights = function(options) {
+	options = $.extend({px: false, filter: 'children', selector: '*'}, options);
 	$(this).each(function(){
 		var currentTallest = 0,
 				$this = $(this),
-				$children = $(this).children();
+				$children = $this[options.filter](options.selector);
 		$children.each(function(i){
 			var $child = $(this);
 			if ($child.height() > currentTallest) { currentTallest = $child.height(); }
 		});
-		if (!px && Number.prototype.pxToEm) currentTallest = currentTallest.pxToEm(); //use ems unless px is specified
+		if (!options.px && Number.prototype.pxToEm) currentTallest = currentTallest.pxToEm(); //use ems unless px is specified
 		// for ie6, set height since min-height isn't supported
 		if ($.browser.msie && $.browser.version == 6.0) { $children.css({'height': currentTallest}); }
 		$children.css({'min-height': currentTallest}); 
@@ -35,16 +36,18 @@ $.fn.equalHeights = function(px) {
 };
 
 // just in case you need it...
-$.fn.equalWidths = function(px) {
+$.fn.equalWidths = function(options) {
+	options = $.extend({px: false, filter: 'children', selector: '*'}, options);
 	$(this).each(function(){
 		var currentWidest = 0,
 				$this = $(this),
-				$children = $this.children();
+				$children = $this.find(options.selector);
+				$children = $this[options.filter](options.selector);
 		$children.each(function(i){
 				var $child = $(this);
 				if($child.width() > currentWidest) { currentWidest = $child.width(); }
 		});
-		if(!px && Number.prototype.pxToEm) currentWidest = currentWidest.pxToEm(); //use ems unless px is specified
+		if(!options.px && Number.prototype.pxToEm) currentWidest = currentWidest.pxToEm(); //use ems unless px is specified
 		// for ie6, set width since min-width isn't supported
 		if ($.browser.msie && $.browser.version == 6.0) { $.children.css({'width': currentWidest}); }
 		$children.css({'min-width': currentWidest}); 
