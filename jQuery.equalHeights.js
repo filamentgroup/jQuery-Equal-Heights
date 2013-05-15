@@ -19,14 +19,17 @@
 
 $.fn.equalHeights = function(px) {
 	$(this).each(function(){
-		var currentTallest = 0;
-		$(this).children().each(function(i){
-			if ($(this).height() > currentTallest) { currentTallest = $(this).height(); }
+		var currentTallest = 0,
+				$this = $(this),
+				$children = $(this).children();
+		$children.each(function(i){
+			var $child = $(this);
+			if ($child.height() > currentTallest) { currentTallest = $child.height(); }
 		});
-    if (!px && Number.prototype.pxToEm) currentTallest = currentTallest.pxToEm(); //use ems unless px is specified
+		if (!px && Number.prototype.pxToEm) currentTallest = currentTallest.pxToEm(); //use ems unless px is specified
 		// for ie6, set height since min-height isn't supported
-		if ($.browser.msie && $.browser.version == 6.0) { $(this).children().css({'height': currentTallest}); }
-		$(this).children().css({'min-height': currentTallest}); 
+		if ($.browser.msie && $.browser.version == 6.0) { $children.css({'height': currentTallest}); }
+		$children.css({'min-height': currentTallest}); 
 	});
 	return this;
 };
@@ -34,14 +37,17 @@ $.fn.equalHeights = function(px) {
 // just in case you need it...
 $.fn.equalWidths = function(px) {
 	$(this).each(function(){
-		var currentWidest = 0;
-		$(this).children().each(function(i){
-				if($(this).width() > currentWidest) { currentWidest = $(this).width(); }
+		var currentWidest = 0,
+				$this = $(this),
+				$children = $this.children();
+		$children.each(function(i){
+				var $child = $(this);
+				if($child.width() > currentWidest) { currentWidest = $child.width(); }
 		});
 		if(!px && Number.prototype.pxToEm) currentWidest = currentWidest.pxToEm(); //use ems unless px is specified
 		// for ie6, set width since min-width isn't supported
-		if ($.browser.msie && $.browser.version == 6.0) { $(this).children().css({'width': currentWidest}); }
-		$(this).children().css({'min-width': currentWidest}); 
+		if ($.browser.msie && $.browser.version == 6.0) { $.children.css({'width': currentWidest}); }
+		$children.css({'min-width': currentWidest}); 
 	});
 	return this;
 };
