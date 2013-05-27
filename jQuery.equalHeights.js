@@ -27,7 +27,7 @@
 			
 	    		if (!px && Number.prototype.pxToEm) currentTallest = currentTallest.pxToEm(); //use ems unless px is specified
 			// for ie6, set height since min-height isn't supported
-			if ($.browser.msie && $.browser.version == 6.0) { $(this).children().css({'height': currentTallest}); }
+			if (typeof (document.body.style.minHeight) === "undefined") { $(this).children().css({'height': currentTallest}); }
 			$(this).children().css({'min-height': currentTallest}); 
 		});
 		return this;
@@ -42,7 +42,7 @@
 			});
 			if(!px && Number.prototype.pxToEm) currentWidest = currentWidest.pxToEm(); //use ems unless px is specified
 			// for ie6, set width since min-width isn't supported
-			if ($.browser.msie && $.browser.version == 6.0) { $(this).children().css({'width': currentWidest}); }
+			if (typeof (document.body.style.minWidth) === "undefined") { $(this).children().css({'width': currentWidest}); }
 			$(this).children().css({'min-width': currentWidest}); 
 		});
 		return this;
