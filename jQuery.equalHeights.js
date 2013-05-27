@@ -15,7 +15,7 @@
  * Changelog:
  *  08.02.2007 initial Version 1.0
  *  07.24.2008 v 2.0 - added support for widths
- *  05.27.2012 scope fix
+ *  05.27.2013 fix for jQuery $ scope so it works with $.noConflict() and support under jQuery 1.9.1
 --------------------------------------------------------------------*/
 (function($) {
 	$.fn.equalHeights = function(px) {
