@@ -15,33 +15,36 @@
  * Changelog:
  *  08.02.2007 initial Version 1.0
  *  07.24.2008 v 2.0 - added support for widths
+ *  05.27.2013 fix for jQuery $ scope so it works with $.noConflict() and support under jQuery 1.9.1
 --------------------------------------------------------------------*/
-
-$.fn.equalHeights = function(px) {
-	$(this).each(function(){
-		var currentTallest = 0;
-		$(this).children().each(function(i){
-			if ($(this).height() > currentTallest) { currentTallest = $(this).height(); }
+(function($) {
+	$.fn.equalHeights = function(px) {
+		$(this).each(function(){
+			var currentTallest = 0;
+			$(this).children().each(function(i){
+				if ($(this).height() > currentTallest) { currentTallest = $(this).height(); }
+			});
+			
+	    		if (!px && Number.prototype.pxToEm) currentTallest = currentTallest.pxToEm(); //use ems unless px is specified
+			// for ie6, set height since min-height isn't supported
+			if (typeof (document.body.style.minHeight) === "undefined") { $(this).children().css({'height': currentTallest}); }
+			$(this).children().css({'min-height': currentTallest}); 
 		});
-    if (!px && Number.prototype.pxToEm) currentTallest = currentTallest.pxToEm(); //use ems unless px is specified
-		// for ie6, set height since min-height isn't supported
-		if ($.browser.msie && $.browser.version == 6.0) { $(this).children().css({'height': currentTallest}); }
-		$(this).children().css({'min-height': currentTallest}); 
-	});
-	return this;
-};
-
-// just in case you need it...
-$.fn.equalWidths = function(px) {
-	$(this).each(function(){
-		var currentWidest = 0;
-		$(this).children().each(function(i){
-				if($(this).width() > currentWidest) { currentWidest = $(this).width(); }
+		return this;
+	};
+	
+	// just in case you need it...
+	$.fn.equalWidths = function(px) {
+		$(this).each(function(){
+			var currentWidest = 0;
+			$(this).children().each(function(i){
+					if($(this).width() > currentWidest) { currentWidest = $(this).width(); }
+			});
+			if(!px && Number.prototype.pxToEm) currentWidest = currentWidest.pxToEm(); //use ems unless px is specified
+			// for ie6, set width since min-width isn't supported
+			if (typeof (document.body.style.minWidth) === "undefined") { $(this).children().css({'width': currentWidest}); }
+			$(this).children().css({'min-width': currentWidest}); 
 		});
-		if(!px && Number.prototype.pxToEm) currentWidest = currentWidest.pxToEm(); //use ems unless px is specified
-		// for ie6, set width since min-width isn't supported
-		if ($.browser.msie && $.browser.version == 6.0) { $(this).children().css({'width': currentWidest}); }
-		$(this).children().css({'min-width': currentWidest}); 
-	});
-	return this;
-};
+		return this;
+	};
+}(jQuery));
