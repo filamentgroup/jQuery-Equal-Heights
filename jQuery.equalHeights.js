@@ -21,7 +21,7 @@ $.fn.equalHeights = function(px) {
 	$(this).each(function(){
 		var currentTallest = 0;
 		$(this).children().each(function(i){
-			if ($(this).height() > currentTallest) { currentTallest = $(this).height(); }
+			if ($(this).outerHeight() > currentTallest) { currentTallest = $(this).outerHeight(); }
 		});
     if (!px && Number.prototype.pxToEm) currentTallest = currentTallest.pxToEm(); //use ems unless px is specified
 		// for ie6, set height since min-height isn't supported
@@ -36,7 +36,7 @@ $.fn.equalWidths = function(px) {
 	$(this).each(function(){
 		var currentWidest = 0;
 		$(this).children().each(function(i){
-				if($(this).width() > currentWidest) { currentWidest = $(this).width(); }
+				if($(this).outerWidth() > currentWidest) { currentWidest = $(this).outerWidth(); }
 		});
 		if(!px && Number.prototype.pxToEm) currentWidest = currentWidest.pxToEm(); //use ems unless px is specified
 		// for ie6, set width since min-width isn't supported
