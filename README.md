@@ -1,7 +1,4 @@
-Unmaintained
-====================
-
-Per [unmaintained repository status](https://github.com/filamentgroup/standards-and-conventions/blob/master/repository-maintenance.md#unmaintained) this repository still works but is no longer accepting issue reports or pull requests. It is deprecated in favor of documentation in the [layout-patterns repository](https://github.com/filamentgroup/layout-patterns), specifically the [Equal Heights section](http://filamentgroup.github.io/layout-patterns/columns/#equalheights)
+:warning: This project is archived and the repository is no longer maintained. 
 
 ---
 
